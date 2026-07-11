@@ -1,90 +1,122 @@
-# Disease Prediction Using Machine Learning
+# AegisHealth AI — Multi-Disease Prediction & Analytics Platform
 
-## Overview
-This project is a web application that predicts the likelihood of individuals developing four different diseases: **diabetes, heart disease, liver disease, and chronic kidney disease**. The system utilizes multiple machine learning models to provide accurate predictions and integrates a chatbot for personalized health guidance.
-
-## Features
-- **Disease Prediction:** Users can input relevant health parameters (such as blood glucose levels, BMI, age, etc.) to predict the likelihood of developing a specific disease.
-- **Machine Learning Models:** Implements multiple machine learning algorithms, including:
-  - K-Nearest Neighbors (KNN)
-  - Random Forest
-  - XGBoost
-  - Support Vector Machine (SVM)
-  - Naïve Bayes
-- **Voting Classifier:** A combination of the top three performing models is used to enhance accuracy.
-- **Chatbot Integration:** A chatbot, powered by the **Botpress API**, provides real-time health guidance and answers user queries based on symptoms.
-- **User-Friendly Interface:** A simple and intuitive web interface that allows users to interact seamlessly with the system.
-
-## Technologies Used
-- **Machine Learning:** Scikit-learn, XGBoost
-- **Backend:** Flask / Django
-- **Frontend:** React / HTML, CSS, JavaScript
-- **Database:** SQLite / PostgreSQL
-- **Chatbot:** Botpress API
-
-## Installation
-To run this project locally, follow these steps:
-
-### Prerequisites
-- Python (>=3.8)
-- Pip
-- Node.js & npm (for frontend)
-- Virtual Environment (optional but recommended)
-
-### Steps
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/disease-prediction-ml.git
-   cd disease-prediction-ml
-   ```
-
-2. **Set Up the Backend:**
-   ```bash
-   cd backend
-   python -m venv venv  # Optional: Create a virtual environment
-   source venv/bin/activate  # For Linux/macOS
-   venv\Scripts\activate  # For Windows
-   pip install -r requirements.txt
-   python app.py  # Start the backend server
-   ```
-
-3. **Set Up the Frontend:**
-   ```bash
-   cd frontend
-   npm install
-   npm start  # Start the frontend server
-   ```
-
-4. **Access the Application:**
-   Open your browser and go to `http://localhost:3000`
-
-## Usage
-1. Select a disease from the given options.
-2. Enter the required health parameters.
-3. Click the "Predict" button to get the results.
-4. Use the chatbot for additional health guidance and information.
-
-## Dataset
-The model is trained on publicly available medical datasets related to diabetes, heart disease, liver disease, and chronic kidney disease. Data preprocessing and feature engineering techniques have been applied to enhance model accuracy.
-
-## Results
-The voting classifier achieves high accuracy by combining the best-performing models. Model performance is evaluated using accuracy, precision, recall, and F1-score metrics.
-
-## Future Improvements
-- Expand to include more diseases.
-- Enhance chatbot capabilities using NLP.
-- Deploy the application on cloud platforms.
-
-## Contributing
-We welcome contributions! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch (`feature-branch`).
-3. Commit your changes and push to your fork.
-4. Submit a pull request.
-
-## Contact
-For any questions or suggestions, please reach out via [GitHub Issues](https://github.com/your-username/disease-prediction-ml/issues).
+AegisHealth AI is a premium, hospital-grade Clinical Decision Support System (CDSS) designed to assist medical practitioners in screening patient health risk factors. Powered by a machine learning voting ensemble classifier, the platform calculates predictive metrics for four major diseases: **Diabetes, Cardiovascular Disease, Chronic Kidney Disease (CKD), and Hepatic (Liver) Disease**.
 
 ---
-**Star this repository** ⭐ if you found this useful!
 
+## 🚀 Key Features
+
+* **Ensemble ML Classification:** Combines the outputs of five distinct classifiers (Random Forest, XGBoost, Support Vector Machines, K-Nearest Neighbors, and Gaussian Naive Bayes) using an optimized Voting Classifier to maximize prediction accuracy.
+* **Granular Disease Portals:**
+  * **Cardiovascular Diagnostics:** Assesses coronary artery disease risk via chest pain classification, blood pressure, fasting sugars, ECG waveforms, and ST-segment depression.
+  * **Diabetes Mellitus Screening:** Evaluates endocrine glucose tolerances, insulin curves, and body mass indexes (BMI).
+  * **Chronic Kidney Disease (CKD) Profiling:** Evaluates kidney filtration statuses using blood urea, serum creatinine, specific gravity, and protein-albumin filtration rates.
+  * **Hepatic Function Diagnostics:** Analyzes bilirubin indexes and hepatic transaminase enzyme trends.
+* **Vibrant Analytics Dashboard:** Displays model accuracy, precision, sensitivity, and F1-score benchmarks interactively using Recharts.
+* **Patient Records Logs:** Maintains a secure, client-side history using browser `localStorage` where clinicians can search previous diagnoses, filter records, or download formatted PDF summaries.
+* **AI conversational Health Consultant:** Embedded Botpress conversational chatbot ready to discuss symptom definitions, dietary regimes, and warning thresholds.
+
+---
+
+## 🛠️ System Architecture
+
+AegisHealth AI is organized into a clean, decoupled architecture:
+1. **Client Interface (React + Tailwind CSS):** A responsive, dashboard-style interface styled with customized shadows, professional typography (Inter/Poppins), and dark mode compatibility.
+2. **Backend Service (Flask API):** A lightweight API service executing standard scaling pipelines (`StandardScaler`) and running pre-trained ML models.
+
+```
++----------------------------------+          +----------------------------------+
+|      AegisHealth React UI        |          |         Flask API Backend        |
+|  (Dashboard, Forms, Recharts)    |  POST    |  (Port 5000, CORS, joblib load)  |
+|  http://localhost:5173           |--------->|  http://127.0.0.1:5000/predict   |
++----------------------------------+  (JSON)  +----------------------------------+
+                                                               |
+                                                               v
+                                                      +------------------+
+                                                      |  ML Model Pool   |
+                                                      |  (Voting Pickle) |
+                                                      +------------------+
+```
+
+---
+
+## 📊 Model Diagnostic Benchmarks
+
+The predictive models were trained on validated datasets (available in `Datasets/`) and benchmarked using classification reports (detailed in `Notebooks/`).
+
+| Diagnostics Module | Best Performing Classifier | Accuracy | Precision | Recall / Sensitivity | F1-Score |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Cardiovascular** | Support Vector Machine (SVM) | **92.7%** | 91.7% | 94.3% | 93.0% |
+| **Diabetes** | Voting Classifier (Ensemble) | **94.8%** | 94.5% | 95.1% | 94.8% |
+| **Kidney (CKD)** | Voting Classifier (Ensemble) | **98.2%** | 100.0% | 94.8% | 97.3% |
+| **Hepatic (Liver)**| XGBoost / Voting Classifier | **99.9%** | 99.9% | 100.0% | 99.9% |
+
+---
+
+## 💻 Local Installation & Setup
+
+### Prerequisites
+* Python (version >= 3.8)
+* Node.js (version >= 18)
+* npm (version >= 9)
+
+---
+
+### Step 1: Configure the Python Backend API
+
+1. Navigate to the root directory:
+   ```bash
+   cd HealthRisk-Prediction
+   ```
+
+2. Create and activate a Python virtual environment:
+   ```bash
+   python -m venv venv
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
+   ```
+
+3. Install the backend dependencies:
+   ```bash
+   pip install flask flask-cors joblib numpy scikit-learn xgboost
+   ```
+
+4. Launch the Flask API server:
+   ```bash
+   python app.py
+   ```
+   *The backend will boot in debug mode on `http://127.0.0.1:5000`.*
+
+---
+
+### Step 2: Configure the React Frontend Client
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install the node dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+   *The client will boot and be accessible at `http://localhost:5173`.*
+
+---
+
+## 🔒 Medical Disclaimer & Care Notice
+
+**AegisHealth AI is a clinical decision support tool and is not certified for primary emergency medical diagnostics.** Prediction outcomes, confidences, and chatbot outputs are secondary indicators intended to complement standard physician assessments. If a patient is experiencing acute chest pain or respiratory distress, contact emergency services (e.g., 911) immediately.
+
+---
+
+## 📞 License & Contact
+
+Distributed under the MIT License. For platform inquiries, suggestions, or institutional integrations, reach out via the [GitHub Issues page](https://github.com/ankit1207yadav/HealthRisk-Prediction/issues).
